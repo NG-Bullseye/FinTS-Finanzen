@@ -47,7 +47,7 @@ set -a; . ./.env; set +a          # FINTS_MASTER_KEY in die Umgebung laden
 ```
 Der Enroll fragt Anmeldename (nicht Kontonummer) und PIN ab, führt den pushTAN-Flow durch und speichert PIN verschlüsselt + Client-State.
 
-> `FINTS_PRODUCT_ID` ist optional. Leer lassen nutzt den python-fints-Lib-Default. Nur setzen, wenn du eine bei der DKB registrierte Product-ID hast.
+> **`FINTS_PRODUCT_ID` / product_id (wichtig für DKB):** Leer lassen nutzt den Default aus `config.py` — eine öffentliche, in [python-fints#183](https://github.com/raphaelm/python-fints/issues/183) mehrfach als DKB-akzeptiert belegte ID. DKB lehnt **ungültige** product_ids bereits bei der Dialog-Initialisierung ab (`9210`/`9800`/`9050`, **vor** jeder TAN-Abfrage). Wer sauber/dauerhaft fahren will, registriert eine **eigene** ID bei der Deutschen Kreditwirtschaft ([fints.org Produktregistrierung](https://www.fints.org/de/hersteller/produktregistrierung), Formular an `registrierung@hbci-zka.de`, ~5–10 Werktage) und setzt sie via `FINTS_PRODUCT_ID`. Öffentliche IDs werden nur geduldet und können gesperrt werden.
 
 ## MCP registrieren
 Der Server läuft über **stdio**. Eintrag in der MCP-Config (Pfade absolut, `FINTS_MASTER_KEY` muss in der Server-Umgebung gesetzt sein):

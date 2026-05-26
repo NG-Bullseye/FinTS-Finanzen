@@ -17,6 +17,7 @@ from __future__ import annotations
 import getpass
 import os
 import sys
+from time import sleep
 
 import config
 import crypto
@@ -122,8 +123,15 @@ def step_login_and_tan(client: FinTS3PinTanClient) -> None:
             if challenge.challenge:
                 _line(f"   Challenge: {challenge.challenge}")
             if getattr(challenge, "decoupled", False):
-                input("   Bestaetige die Freigabe in der DKB-App, dann Enter ...")
+                # Decoupled (DKB-App, 940): TAN wird ignoriert, die Freigabe kommt
+                # asynchron in der App. send_tan() liefert erneut NeedTANResponse,
+                # bis bestaetigt ist -> pollen statt einmalig senden (python-fints#183,
+                # send_tan-Doc: "If decoupled is True, the tan parameter is ignored").
+                _line("   Bestaetige die Freigabe jetzt in der DKB-App ...")
                 challenge = client.send_tan(challenge, "")
+                while isinstance(challenge, NeedTANResponse):
+                    sleep(1)
+                    challenge = client.send_tan(challenge, "")
             else:
                 tan = input("   TAN eingeben: ").strip()
                 challenge = client.send_tan(challenge, tan)

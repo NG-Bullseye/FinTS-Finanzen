@@ -12,10 +12,18 @@ BANK_CODE = "12030000"  # BLZ / bank_identifier
 FINTS_ENDPOINT = "https://fints.dkb.de/fints"
 
 # python-fints verlangt seit v4 eine product_id (sonst TypeError im Konstruktor).
-# DKB akzeptiert in der Praxis den Lib-eigenen Test-Identifier; eine echte
-# Registrierung ist optional. Wer eine registrierte product_id hat, setzt sie
-# via FINTS_PRODUCT_ID. NICHT selbst registrieren.
-DEFAULT_PRODUCT_ID = "9FA6681DEC0CF3046BFC2F8A6"  # python-fints Default-Test-ID
+# WICHTIG (verifiziert python-fints#183, 2025/2026): DKB lehnt seit dem
+# FinTS-Umzug 10/2024 jede nicht akzeptierte product_id ab — der Dialog wird
+# bankseitig VOR jeder TAN-Abfrage gekippt (9210 Auftrag abgelehnt / 9800 Dialog
+# abgebrochen / 9050). Es ist KEIN PIN/TAN-Fehler, sondern Identifikations-Ebene.
+# Sauber: eigene product_id bei der Deutschen Kreditwirtschaft registrieren
+# (https://www.fints.org/de/hersteller/produktregistrierung, ~5-10 Werktage,
+# Original-Formular an registrierung@hbci-zka.de) und via FINTS_PRODUCT_ID setzen.
+# Default unten ist die in python-fints#183 mehrfach als funktionierend belegte
+# oeffentliche ID (NOYB4Europe/felixschndr, 2025-08 .. 2026-05) — pragmatischer
+# Start ohne Registrierung. Risiko: oeffentliche IDs werden von DKB nur geduldet,
+# koennen jederzeit gesperrt werden -> dann FINTS_PRODUCT_ID auf eigene ID setzen.
+DEFAULT_PRODUCT_ID = "6151256F3D4F9975B877BD4A2"  # public, DKB-akzeptiert (#183)
 
 # --- Env-Var-Namen ---
 ENV_MASTER_KEY = "FINTS_MASTER_KEY"      # base64(32 Byte) AES-256-GCM Schluessel
