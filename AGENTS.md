@@ -1,0 +1,3 @@
+# FinTS-Finanzen — System-Brief
+
+Eigenstaendiges, read-only MCP-Repo, das Leos DKB-Konto via FinTS/HBCI PIN-TAN ausliest (Konten, Saldo, Umsaetze) und Cortex damit permanenten Finanzueberblick gibt. Kein Schreibzugriff, keine Ueberweisungen. PIN liegt AES-256-GCM-verschluesselt unter `~/.config/fints-finanzen/`, der Schluessel kommt aus `FINTS_MASTER_KEY` (nie im Repo, nie im git). Der erste Login braucht eine pushTAN-Freigabe (`enroll.py`, fuehrt NUR Leo aus); danach haelt der persistierte FinTS-State Lesezugriffe ~90 Tage TAN-frei (PSD2 SCA-Exemption). Kein GitHub-Remote — rein lokal. Kanon des Gesamtsystems: `~/cortex/CLAUDE.md`.
