@@ -6,3 +6,5 @@ __pycache__/
 .env
 secrets/
 .build_report.md
+.diag_report.md
+.diag2_report.md

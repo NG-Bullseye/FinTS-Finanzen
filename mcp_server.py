@@ -1,12 +1,14 @@
 #!/usr/bin/env python3
-"""Read-only MCP-Server fuer Leos DKB-Konto (FinTS/HBCI PIN-TAN).
+"""Read-only MCP-Server fuer FinTS/HBCI-Banking via PIN-TAN.
 
-Stellt Cortex permanenten Finanzueberblick bereit: Konten, Saldo, Umsaetze.
+Stellt Finanzueberblick bereit: Konten, Saldo, Umsaetze.
 STRIKT read-only — keine Ueberweisungen.
 
 Transport: stdio.  Tools: accounts, balance, transactions, summary.
 Fehlerfaelle (kein Enroll, fehlender Key, TAN noetig) werden als klarer
 Fehler-String zurueckgegeben, NICHT als Crash.
+
+Bank wird via FINTS_BANK_CODE / FINTS_ENDPOINT konfiguriert (Default: DKB).
 """
 from __future__ import annotations
 
@@ -20,7 +22,7 @@ from crypto import MasterKeyError
 mcp = FastMCP(
     name="fints-finanzen",
     instructions=(
-        "Read-only Zugriff auf Leos DKB-Konto via FinTS. "
+        "Read-only Zugriff auf FinTS/HBCI-Banking. "
         "Tools: accounts (Konten auflisten), balance (Saldo), "
         "transactions (Umsaetze der letzten N Tage), summary (alle Salden). "
         "Kein Schreibzugriff, keine Ueberweisungen."

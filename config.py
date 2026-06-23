@@ -7,9 +7,10 @@ from __future__ import annotations
 import os
 from pathlib import Path
 
-# --- Bank (DKB, verifiziert 2024-11-25) ---
-BANK_CODE = "12030000"  # BLZ / bank_identifier
-FINTS_ENDPOINT = "https://fints.dkb.de/fints"
+# --- Bank-Konstanten (ueberschreibbar via Env) ---
+# Defaults sind DKB (verifiziert). Jede andere FinTS-Bank kann via Env gesetzt werden.
+BANK_CODE = os.environ.get("FINTS_BANK_CODE", "12030000")
+FINTS_ENDPOINT = os.environ.get("FINTS_ENDPOINT", "https://fints.dkb.de/fints")
 
 # python-fints verlangt seit v4 eine product_id (sonst TypeError im Konstruktor).
 # WICHTIG (verifiziert python-fints#183, 2025/2026): DKB lehnt seit dem
