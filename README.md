@@ -57,14 +57,14 @@ The enrollment asks for your online-banking login name (not the account number) 
 
 ### 3. Register the MCP server
 
-The server runs over **stdio**. Example MCP configuration (`FINTS_MASTER_KEY` must be set in the server's environment):
+The server runs over **stdio**. Example MCP configuration (`FINTS_MASTER_KEY` must be set in the server's environment) — use absolute paths, MCP clients do not launch servers from the repo directory. Prefer exporting `FINTS_MASTER_KEY` in the client's environment over writing it into this file:
 
 ```json
 {
   "mcpServers": {
     "fints-finanzen": {
-      "command": "./.venv/bin/python",
-      "args": ["mcp_server.py"],
+      "command": "/absolute/path/to/FinTS-Finanzen/.venv/bin/python",
+      "args": ["/absolute/path/to/FinTS-Finanzen/mcp_server.py"],
       "env": {
         "FINTS_MASTER_KEY": "<base64-32-byte-key>",
         "FINTS_BANK_CODE": "12030000",

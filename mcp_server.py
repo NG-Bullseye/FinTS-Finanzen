@@ -41,12 +41,12 @@ def _guard(fn):
     except MasterKeyError as exc:
         return {"ok": False, "error": "master_key", "message": str(exc)}
     except Exception as exc:  # noqa: BLE001 - nie crashen, Bank-/Netzfehler melden
-        return {"ok": False, "error": "fints_error", "message": str(exc)}
+        return {"ok": False, "error": "fints_error", "message": str(exc) or exc.__class__.__name__}
 
 
 @mcp.tool()
 def accounts() -> dict:
-    """Liste aller DKB-Konten (IBAN, Kontonummer, BIC)."""
+    """Liste aller Konten der konfigurierten Bank (IBAN, Kontonummer, BIC)."""
     return _guard(fints_client.list_accounts)
 
 
