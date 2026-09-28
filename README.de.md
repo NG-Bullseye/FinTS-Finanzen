@@ -34,8 +34,7 @@ Nach Ablauf der ~90 Tage meldet der MCP-Server `tan_required` (Tool-Fehler, kein
 
 ```bash
 cd FinTS-Finanzen
-python3 -m venv .venv
-.venv/bin/pip install -r requirements.txt
+./bootstrap.sh    # idempotent: .venv + requirements + .env aus Vorlage
 ```
 
 **Master-Key erzeugen und eintragen** (einmalig):

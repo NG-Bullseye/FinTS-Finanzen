@@ -32,8 +32,7 @@ Requires Python 3.10+.
 ```bash
 git clone https://github.com/NG-Bullseye/FinTS-Finanzen.git
 cd FinTS-Finanzen
-python3 -m venv .venv
-.venv/bin/pip install -r requirements.txt
+./bootstrap.sh    # idempotent: .venv + requirements + .env aus Vorlage
 ```
 
 ### 1. Generate a master key (one-time)
